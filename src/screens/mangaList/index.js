@@ -2,11 +2,12 @@ import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {FlatList,Image,SafeAreaView,ScrollView,Text,TouchableOpacity,View,} from 'react-native';
 import {NavigationButton} from '../../components/button';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import favFunc from '../../utilitaires/favFunc';
 import stillConnected from '../../utilitaires/stillConnected';
 
 
-const MangaList = {{navigation}} => {
+const MangaList =({navigation}) => {
   const [mangas, setMangas] = useState([]);
   const [page,setPage] = useState(0);
   const offset = 20;
