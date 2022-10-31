@@ -5,6 +5,7 @@ import {Text, TextInput, View} from 'react-native';
 import {NavigationButton} from '../../components/button';
 import {useFocusEffect} from '@react-navigation/native';
 import stillConnected from '../../utilitaires/stillConnected';
+import LoginForm from '../../components/loginForm'
 
 const Login = ({navigation}) => {
   const [inputs, setInputs] = React.useState({

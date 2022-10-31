@@ -8,10 +8,10 @@ const Manga = ({route}) => {
   useEffect(() => {
     axios({
       method: 'GET',
-      url: `https://api.jikan.moe/v4/manga/${id}/full`,
+      url: `https://api.jikan.moe/v4/manga/${route.params.id}/title`,
     })
       .then(response => {
-        setManga(response.data.data.results[0]);
+        setManga(response.data.data[0]);
       })
       .catch(error => {
         console.log(error);

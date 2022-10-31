@@ -21,7 +21,7 @@ const Favoris = () => {
   return (
     <ScrollView>
       <Text>Page des Favoris</Text>
-      {favorite.map(manga => (
+      {favoris.map(manga => (
         <View key={manga.id}>
           <Text>{manga.title}</Text>
           <Image

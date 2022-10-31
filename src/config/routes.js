@@ -6,6 +6,7 @@ import {Dimensions} from 'react-native';
 import MangaList from '../screens/mangaList';
 import Manga from '../screens/manga';
 import Favoris from '../screens/favoris';
+import Login from '../screens/login';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,10 +14,11 @@ const Routes = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="MangaList">
-        <Stack.Screen name="MangaList" component={MangaList}/>
-        <Stack.Screen name="Manga" component={Manga}/>
-        <Stack.Screen name="Favoris" component={Favoris}/>
+      <Stack.Navigator initialRouteName='Login'>
+        <Stack.Screen name='Login' component={Login}/>
+        <Stack.Screen name='MangaList' component={MangaList}/>
+        <Stack.Screen name='Manga' component={Manga}/>
+        <Stack.Screen name='Favoris' component={Favoris}/>
       </Stack.Navigator>
     </NavigationContainer>
   )

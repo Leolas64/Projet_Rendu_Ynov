@@ -5,12 +5,13 @@ import {NavigationButton} from '../../components/button';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import favFunc from '../../utilitaires/favFunc';
 import stillConnected from '../../utilitaires/stillConnected';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const MangaList =({navigation}) => {
   const [mangas, setMangas] = useState([]);
   const [page,setPage] = useState(0);
-  const offset = 20;
+  const offset = 30;
 
   useEffect(() => {
     stillConnected(navigation);
@@ -21,13 +22,13 @@ const MangaList =({navigation}) => {
       try {
         const result = await axios({
           method:'GET',
-          url: 'https://api.jikan.moe/v4/',
+          url: 'https://api.jikan.moe/v4/manga',
           params:{
             offset: offset*page,
-            limit: 20,
+            limit: 30,
           },
         });
-        setMangas([...mangas, ...result.data.data.results]);
+        setMangas([...mangas, ...result.data.data]);
       } catch (error) {
         console.log(error);
       }
@@ -45,7 +46,7 @@ const MangaList =({navigation}) => {
   const AddOrRemoveToFavorite = async manga => {
     const localFavorite = await favFunc();
     console.log(localFavorite);
-    const index = localFavorite.findIndex(anime => anime.id === manga.id);
+    const index = localFavorite.findIndex(item => item.id === manga.id);
     console.log(index);
     if (index === -1) {
       localFavorite.push(manga);
@@ -60,9 +61,10 @@ const MangaList =({navigation}) => {
   return(
     <View>
       <Text>Liste des mangas</Text>
+      <NavigationButton onPress={disconnect} label="Se deconnecter" />
       <NavigationButton
-      onPress={() => navigation.navigate('Login')}
-      label="Page Login"
+        onPress={() => navigation.navigate('Login')}
+        label="Page Login"
       />
       <NavigationButton
         onPress={() => navigation.navigate('Favoris')}
@@ -71,21 +73,21 @@ const MangaList =({navigation}) => {
 
       <FlatList
         data={mangas}
-        keyExtractor={manga => manga.id}
+        keyExtractor={item => item.id}
         onEndReached={() => setPage(page + 1)}
-        renderItem={({manga}) => {
+        renderItem={({item}) => {
           return (
             <>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Mangas', {id: manga.id})}>
+                onPress={() => navigation.navigate('Manga', {id: item.id})}>
                 <Image
                   style={{width: 100, height: 100}}
                   source={require('../../assets/images/MangaDefault.jpg')}
                 />
-                <Text>{manga.title}</Text>
+                <Text>{item.name}</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => AddOrRemoveToFavorite(manga)}
+                onPress={() => AddOrRemoveToFavorite(item)}
                 style={{padding: 24}}>
                 <Text>Ajoutez aux favoris</Text>
               </TouchableOpacity>
